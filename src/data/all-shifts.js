@@ -1,0 +1,22 @@
+const allShifts = [
+  { id: 1, start: "09:00", end: "09:30", status: "boşdur" },
+  { id: 2, start: "09:30", end: "10:00", status: "boşdur" },
+  { id: 3, start: "10:00", end: "10:30", status: "boşdur" },
+  { id: 4, start: "10:30", end: "11:00", status: "boşdur" },
+  { id: 5, start: "11:00", end: "11:30", status: "boşdur" },
+  { id: 6, start: "11:30", end: "12:00", status: "boşdur" },
+  { id: 7, start: "12:00", end: "12:30", status: "boşdur" },
+  { id: 8, start: "12:30", end: "13:00", status: "boşdur" },
+  { id: 9, start: "13:00", end: "13:30", status: "boşdur" },
+  { id: 10, start: "13:30", end: "14:00", status: "boşdur" },
+  { id: 11, start: "14:00", end: "14:30", status: "boşdur" },
+  { id: 12, start: "14:30", end: "15:00", status: "boşdur" },
+  { id: 13, start: "15:00", end: "15:30", status: "boşdur" },
+  { id: 14, start: "15:30", end: "16:00", status: "boşdur" },
+  { id: 15, start: "16:00", end: "16:30", status: "boşdur" },
+  { id: 16, start: "16:30", end: "17:00", status: "boşdur" },
+  { id: 17, start: "17:00", end: "17:30", status: "boşdur" },
+  { id: 18, start: "17:30", end: "18:00", status: "boşdur" }
+];
+
+export default allShifts;
