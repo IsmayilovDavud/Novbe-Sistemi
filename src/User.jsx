@@ -1,21 +1,20 @@
+const handleLogin = async (e) => {
+  e.preventDefault();
 
-import React, { useState } from "react";
-import Login from "./User";
-import MainPage from "./pages/MainPage";
+  try {
+    const res = await fetch("http://localhost:3001/users");
+    const users = await res.json();
 
-export default function UserApp() {
-  const [currentUser, setCurrentUser] = useState(null);
+    const foundUser = users.find(
+      (u) => u.login === formData.login && u.pass === formData.pass
+    );
 
-  const handleLogin = (user) => setCurrentUser(user);
-  const handleLogout = () => setCurrentUser(null);
-
-  return (
-    <>
-      {!currentUser ? (
-        <Login onLogin={handleLogin} />
-      ) : (
-        <MainPage onLogout={handleLogout} />
-      )}
-    </>
-  );
-}
+    if (foundUser) {
+      onLogin(foundUser);
+    } else {
+      setMessage("❌ Yanlış login və ya şifrə!");
+    }
+  } catch (err) {
+    setMessage("⚠️ Serverə qoşulmaq mümkün olmadı!");
+  }
+};

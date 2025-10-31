@@ -1,0 +1,22 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "login": "Admin",
+      "pass": "12345",
+      "role": "admin"
+    },
+    {
+      "id": "2",
+      "login": "User",
+      "pass": "123",
+      "role": "user"
+    },
+    {
+      "id": "1761908285500",
+      "login": "Nilufer",
+      "pass": "12345",
+      "role": "user"
+    }
+  ]
+}

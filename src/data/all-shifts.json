@@ -4,22 +4,22 @@
       "id": "1",
       "start": "09:00",
       "end": "09:30",
-      "status": "rezerv olunub",
-      "bookedByUser": true
+      "status": "boşdur",
+      "bookedByUser": false
     },
     {
       "id": "2",
       "start": "09:30",
       "end": "10:00",
-      "status": "rezerv olunub",
-      "bookedByUser": true
+      "status": "boşdur",
+      "bookedByUser": false
     },
     {
       "id": "3",
       "start": "10:00",
       "end": "10:30",
-      "status": "rezerv olunub",
-      "bookedByUser": true
+      "status": "boşdur",
+      "bookedByUser": false
     },
     {
       "id": "4",
@@ -61,13 +61,15 @@
       "id": "10",
       "start": "13:30",
       "end": "14:00",
-      "status": "boşdur"
+      "status": "rezerv olunub",
+      "bookedByUser": true
     },
     {
       "id": "11",
       "start": "14:00",
       "end": "14:30",
-      "status": "boşdur"
+      "status": "rezerv olunub",
+      "bookedByUser": true
     },
     {
       "id": "12",
@@ -85,7 +87,8 @@
       "id": "14",
       "start": "15:30",
       "end": "16:00",
-      "status": "boşdur"
+      "status": "rezerv olunub",
+      "bookedByUser": true
     },
     {
       "id": "15",

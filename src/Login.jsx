@@ -1,21 +1,31 @@
 import { useState } from "react";
-import UserData from "./data/users";
+import { Link } from "react-router-dom";
 
 export default function Login({ onLogin }) {
   const [formData, setFormData] = useState({ login: "", pass: "" });
   const [message, setMessage] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    const foundUser = UserData.find(
-      (u) => u.login === formData.login && u.pass === formData.pass
-    );
+    try {
+      const res = await fetch("http://localhost:3001/users");
+      const users = await res.json();
 
-    if (foundUser) {
-      onLogin(foundUser);
-    } else {
-      setMessage("❌ Yanlış login və ya şifrə!");
+      const foundUser = users.find(
+        (u) =>
+          u.login.toLowerCase() === formData.login.toLowerCase() &&
+          u.pass === formData.pass
+      );
+
+      if (foundUser) {
+        onLogin(foundUser);
+      } else {
+        setMessage("❌ Yanlış login və ya şifrə!");
+      }
+    } catch (err) {
+      console.error(err);
+      setMessage("⚠️ Serverə qoşulmaq mümkün olmadı!");
     }
   };
 
@@ -54,8 +64,19 @@ export default function Login({ onLogin }) {
         </form>
 
         {message && (
-          <p className="text-center mt-4 font-medium text-red-500">{message}</p>
+          <p className="text-center mt-4 font-medium text-red-500">
+            {message}
+          </p>
         )}
+
+        <div className="text-center mt-6">
+          <Link
+            to="/new-user"
+            className="text-blue-600 hover:underline font-medium"
+          >
+            Qeydiyyatdan keç
+          </Link>
+        </div>
       </div>
     </div>
   );
