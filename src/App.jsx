@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import Login from "./Login";
 import Admin from "./Admin";
 import MainPage from "./pages/MainPage";
-import NewUser from "./pages/NewUser"; // ✅ Əlavə et
+import NewUser from "./pages/NewUser";
+import ChangePassword from "./pages/ChangePassword";
+
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -46,11 +48,17 @@ export default function App() {
           path="/user"
           element={
             currentUser?.role === "user" ? (
-              <MainPage onLogout={handleLogout} />
+              <MainPage onLogout={handleLogout} currentUser={currentUser} />
             ) : (
               <Navigate to="/" replace />
             )
           }
+        />
+
+        {/* Şifrə dəyişmə səhifəsi */}
+        <Route
+          path="/change-password"
+          element={<ChangePassword currentUser={currentUser} />}
         />
       </Routes>
     </Router>

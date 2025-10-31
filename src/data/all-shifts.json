@@ -37,13 +37,19 @@
       "id": "6",
       "start": "11:30",
       "end": "12:00",
-      "status": "boşdur"
+      "status": "rezerv olunub",
+      "bookedByUser": true,
+      "bookedBy": "Nilufer",
+      "bookedUserId": "1761908285500"
     },
     {
       "id": "7",
       "start": "12:00",
       "end": "12:30",
-      "status": "boşdur"
+      "status": "rezerv olunub",
+      "bookedByUser": true,
+      "bookedBy": "Nilufer",
+      "bookedUserId": "1761908285500"
     },
     {
       "id": "8",

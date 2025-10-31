@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
+import { useNavigate } from "react-router-dom";
 
-export default function MainPage({ onLogout }) {
+export default function MainPage({ onLogout, currentUser }) {
   const [shifts, setShifts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
-  // --- JSON serverdən datanı al ---
   useEffect(() => {
     fetch("http://localhost:4000/all-shifts")
       .then((res) => res.json())
@@ -20,7 +21,13 @@ export default function MainPage({ onLogout }) {
     const shift = shifts.find((s) => s.id === id);
     if (!shift || shift.status !== "boşdur") return;
 
-    const updatedShift = { ...shift, status: "rezerv olunub", bookedByUser: true };
+    const updatedShift = {
+      ...shift,
+      status: "rezerv olunub",
+      bookedByUser: true,
+      bookedBy: currentUser.login,
+      bookedUserId: currentUser.id,
+    };
 
     await fetch(`http://localhost:4000/all-shifts/${id}`, {
       method: "PUT",
@@ -36,7 +43,18 @@ export default function MainPage({ onLogout }) {
     const shift = shifts.find((s) => s.id === id);
     if (!shift || !shift.bookedByUser) return;
 
-    const updatedShift = { ...shift, status: "boşdur", bookedByUser: false };
+    if (shift.bookedUserId !== currentUser.id) {
+      alert("❌ Bu növbəni yalnız rezerv edən istifadəçi dəyişə bilər!");
+      return;
+    }
+
+    const updatedShift = {
+      ...shift,
+      status: "boşdur",
+      bookedByUser: false,
+      bookedBy: null,
+      bookedUserId: null,
+    };
 
     await fetch(`http://localhost:4000/all-shifts/${id}`, {
       method: "PUT",
@@ -61,25 +79,35 @@ export default function MainPage({ onLogout }) {
         <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 animate-pulse drop-shadow-lg">
           📅 Növbə Cədvəli
         </h1>
-        <button
-          onClick={onLogout}
-          className="bg-red-600 text-white font-bold px-6 py-3 rounded-full shadow-xl hover:bg-red-700 transition duration-300 transform hover:scale-110 hover:rotate-1"
-        >
-          Çıxış
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={() => navigate("/change-password")}
+            className="bg-yellow-500 text-white font-bold px-6 py-3 rounded-full shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-110"
+          >
+            Şifrəni dəyiş
+          </button>
+          <button
+            onClick={onLogout}
+            className="bg-red-600 text-white font-bold px-6 py-3 rounded-full shadow-xl hover:bg-red-700 transition duration-300 transform hover:scale-110"
+          >
+            Çıxış
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {shifts.map((shift) => {
           const isFree = shift.status === "boşdur";
-          const bookedByUser = shift.bookedByUser;
+          const isMine = shift.bookedUserId === currentUser.id;
 
           return (
             <div
               key={shift.id}
-              className={`relative p-6 rounded-3xl shadow-2xl cursor-pointer transform transition-all duration-300 hover:scale-105 ${
+              className={`relative p-6 rounded-3xl shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer ${
                 isFree
-                  ? "bg-gradient-to-tr from-blue-400 via-purple-500 to-pink-500 border-2 border-cyan-400 hover:shadow-[0_0_20px_rgba(72,255,233,0.7)]"
+                  ? "bg-gradient-to-tr from-blue-400 via-purple-500 to-pink-500 border-2 border-cyan-400"
+                  : isMine
+                  ? "bg-gradient-to-tr from-green-500 via-blue-600 to-teal-500 border-2 border-green-300"
                   : "bg-gradient-to-tr from-red-500 via-pink-600 to-red-700 opacity-80 border-2 border-red-600"
               }`}
               onClick={() => isFree && handleBooking(shift.id)}
@@ -95,24 +123,25 @@ export default function MainPage({ onLogout }) {
                 )}
               </div>
 
-              <p className="font-medium text-white drop-shadow">
+              <p className="text-white font-medium">
                 Status:{" "}
-                <span
-                  className={`font-bold ${
-                    isFree ? "text-cyan-200" : "text-red-200"
-                  }`}
-                >
-                  {shift.status}
+                <span className="font-bold">
+                  {shift.status}{" "}
+                  {shift.bookedBy && (
+                    <span className="text-yellow-300">
+                      ({shift.bookedBy})
+                    </span>
+                  )}
                 </span>
               </p>
 
-              {bookedByUser && (
+              {isMine && (
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     handleCancel(shift.id);
                   }}
-                  className="mt-3 w-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 text-white font-bold py-2 rounded-full shadow-lg hover:from-blue-400 hover:via-pink-500 hover:to-purple-600 hover:shadow-[0_0_20px_rgba(0,255,255,0.7)] hover:scale-105 transition transform duration-300"
+                  className="mt-3 w-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 text-white font-bold py-2 rounded-full hover:scale-105 transition"
                 >
                   Ləğv et / Dəyiş
                 </button>
