@@ -7,7 +7,7 @@ export default function MainPage({ onLogout }) {
 
   // --- JSON serverdən datanı al ---
   useEffect(() => {
-    fetch("http://localhost:3001/all-shifts")
+    fetch("http://localhost:4000/all-shifts")
       .then((res) => res.json())
       .then((data) => {
         setShifts(data);
@@ -22,7 +22,7 @@ export default function MainPage({ onLogout }) {
 
     const updatedShift = { ...shift, status: "rezerv olunub", bookedByUser: true };
 
-    await fetch(`http://localhost:3001/all-shifts/${id}`, {
+    await fetch(`http://localhost:4000/all-shifts/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedShift),
@@ -38,7 +38,7 @@ export default function MainPage({ onLogout }) {
 
     const updatedShift = { ...shift, status: "boşdur", bookedByUser: false };
 
-    await fetch(`http://localhost:3001/all-shifts/${id}`, {
+    await fetch(`http://localhost:4000/all-shifts/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedShift),

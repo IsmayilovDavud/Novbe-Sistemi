@@ -5,7 +5,7 @@ export default function Dashboard() {
   const [shifts, setShifts] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/all-shifts")
+    fetch("http://localhost:4000/all-shifts")
       .then((res) => res.json())
       .then((data) => setShifts(data));
   }, []);

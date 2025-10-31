@@ -19,7 +19,7 @@ export default function NewUser() {
     }
 
     try {
-      const res = await fetch("http://localhost:3001/users");
+      const res = await fetch("http://localhost:3000/users");
       const users = await res.json();
 
       const exists = users.find(
@@ -31,7 +31,7 @@ export default function NewUser() {
         return;
       }
 
-      await fetch("http://localhost:3001/users", {
+      await fetch("http://localhost:3000/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

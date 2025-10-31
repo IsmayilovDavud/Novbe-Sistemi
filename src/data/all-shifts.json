@@ -68,14 +68,15 @@
       "id": "11",
       "start": "14:00",
       "end": "14:30",
-      "status": "rezerv olunub",
-      "bookedByUser": true
+      "status": "boşdur",
+      "bookedByUser": false
     },
     {
       "id": "12",
       "start": "14:30",
       "end": "15:00",
-      "status": "boşdur"
+      "status": "boşdur",
+      "bookedByUser": false
     },
     {
       "id": "13",
