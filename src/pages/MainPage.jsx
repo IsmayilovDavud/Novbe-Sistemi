@@ -25,8 +25,8 @@ export default function MainPage({ onLogout, currentUser }) {
       ...shift,
       status: "rezerv olunub",
       bookedByUser: true,
-      bookedBy: currentUser.login,
-      bookedUserId: currentUser.id,
+      bookedBy: currentUser?.login || "Naməlum", // 🟢 Avtomatik istifadəçi adı
+      bookedUserId: currentUser?.id || Date.now().toString(), // 🟢 ID də yazılır
     };
 
     await fetch(`http://localhost:4000/all-shifts/${id}`, {
@@ -44,7 +44,7 @@ export default function MainPage({ onLogout, currentUser }) {
     if (!shift || !shift.bookedByUser) return;
 
     if (shift.bookedUserId !== currentUser.id) {
-      alert("❌ Bu növbəni yalnız rezerv edən istifadəçi dəyişə bilər!");
+      alert("❌ Bu növbəni yalnız rezerv edən istifadəçi ləğv edə bilər!");
       return;
     }
 

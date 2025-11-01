@@ -31,7 +31,10 @@
       "id": "5",
       "start": "11:00",
       "end": "11:30",
-      "status": "boşdur"
+      "status": "boşdur",
+      "bookedByUser": false,
+      "bookedBy": null,
+      "bookedUserId": null
     },
     {
       "id": "6",
